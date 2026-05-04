@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Media Marketing | AI-Powered Leads & Appointments for Real Estate Agents</title>
+    <meta name="description" content="Nova Media Marketing runs high-converting Meta Ad campaigns for real estate agents, then uses AI to qualify every lead and book them directly onto your calendar.">
+    <meta property="og:title" content="Nova Media Marketing | Real Estate Lead Generation">
+    <meta property="og:description" content="Meta Ads + AI Qualification = A Full Calendar of Qualified Appointments.">
+    <meta property="og:image" content="https://novamediamarketing.org/og-image.jpg">
+    <meta property="og:url" content="https://novamediamarketing.org">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+
+    <style>
+    /* ──────────────────────────────────────────
+       RESET & TOKENS
+    ────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg:         #080808;
+        --bg2:        #0e0e0e;
+        --text:       #f0ebe2;
+        --gold:       #c8a96e;
+        --gold-lt:    #d9bc82;
+        --gold-dk:    #a8893e;
+        --gold-glow:  rgba(200,169,110,0.12);
+        --card-bg:    rgba(16,16,16,0.85);
+        --border:     rgba(200,169,110,0.14);
+        --border-lg:  rgba(200,169,110,0.28);
+        --muted:      rgba(240,235,226,0.45);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'DM Sans', sans-serif;
+        font-size: 16px;
+        line-height: 1.7;
+        overflow-x: hidden;
+        cursor: none;
+    }
+
+    /* ──────────────────────────────────────────
+       CUSTOM CURSOR
+    ────────────────────────────────────────── */
+    #cursor {
+        width: 8px; height: 8px;
+        background: var(--gold);
+        border-radius: 50%;
+        position: fixed; top: 0; left: 0;
+        pointer-events: none; z-index: 9999;
+        transform: translate(-50%,-50%);
+        transition: width .25s, height .25s, opacity .25s, background .25s;
+    }
+    #cursor.expand {
+        width: 36px; height: 36px;
+        background: transparent;
+        border: 1px solid var(--gold);
+        opacity: .7;
+    }
+
+    /* ──────────────────────────────────────────
+       NAVIGATION
+    ────────────────────────────────────────── */
+    nav {
+        position: fixed; top: 0; left: 0; right: 0;
+        z-index: 1000;
+        padding: 28px 64px;
+        display: flex; align-items: center; justify-content: space-between;
+        transition: padding .5s, background .5s, border-color .5s;
+        border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+        padding-top: 16px; padding-bottom: 16px;
+        background: rgba(8,8,8,.96);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border-color: var(--border);
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .nav-logo-img {
+        height: 44px; width: auto; display: block;
+        filter: brightness(0) invert(1);
+        opacity: .92;
+        transition: opacity .3s, filter .3s;
+    }
+    .nav-logo:hover .nav-logo-img { opacity: 1; }
+    nav.scrolled .nav-logo-img { opacity: .88; }
+    .nav-logo-fallback { display: flex; align-items: center; gap: 10px; }
+    .logo-mark {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 24px; font-weight: 600;
+        color: var(--gold); letter-spacing: 7px; line-height: 1;
+    }
+    .logo-name {
+        font-size: 8.5px; font-weight: 500;
+        letter-spacing: 3px; text-transform: uppercase;
+        color: var(--text); opacity: .5;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
+    .nav-links a {
+        font-size: 10.5px; font-weight: 400;
+        letter-spacing: 2.5px; text-transform: uppercase;
+        color: var(--text); text-decoration: none;
+        opacity: .6; transition: opacity .3s; position: relative;
+    }
+    .nav-links a::after {
+        content: ''; position: absolute;
+        bottom: -4px; left: 0; width: 0; height: 1px;
+        background: var(--gold); transition: width .3s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+        font-size: 10.5px; font-weight: 500;
+        letter-spacing: 2px; text-transform: uppercase;
+        color: var(--bg); background: var(--gold);
+        text-decoration: none; padding: 13px 26px;
+        transition: background .3s, transform .2s, box-shadow .3s;
+    }
+    .nav-cta:hover {
+        background: var(--gold-lt);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(200,169,110,0.3);
+    }
+
+    .nav-hamburger {
+        display: none; flex-direction: column; gap: 5px;
+        background: none; border: none; cursor: none; padding: 4px;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--text); transition: all .3s; }
+
+    /* ──────────────────────────────────────────
+       MOBILE MENU
+    ────────────────────────────────────────── */
+    .mobile-menu {
+        display: none; position: fixed; inset: 0;
+        background: rgba(8,8,8,.99);
+        z-index: 999;
+        flex-direction: column; align-items: center;
+        justify-content: center; gap: 32px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 44px; font-weight: 300;
+        color: var(--text); text-decoration: none; transition: color .3s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close {
+        position: absolute; top: 28px; right: 32px;
+        background: none; border: none;
+        color: var(--text); font-size: 30px;
+        cursor: none; opacity: .5; transition: opacity .3s;
+    }
+    .mobile-close:hover { opacity: 1; }
+
+    /* ──────────────────────────────────────────
+       HERO
+    ────────────────────────────────────────── */
+    #hero {
+        min-height: 100vh;
+        display: flex; flex-direction: column;
+        justify-content: center; align-items: center;
+        position: relative; overflow: hidden;
+        padding: 160px 64px 120px;
+        text-align: center;
+    }
+
+    /* Noise grain */
+    #hero::before {
+        content: ''; position: absolute; inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+        background-size: 280px; pointer-events: none; z-index: 1;
+        animation: grainShift 10s steps(2) infinite;
+    }
+    @keyframes grainShift {
+        0%,100% { background-position: 0 0; }
+        25%  { background-position: -20% 10%; }
+        50%  { background-position: 10% -15%; }
+        75%  { background-position: -5% 20%; }
+    }
+
+    /* Radial gold glow */
+    .hero-glow {
+        position: absolute; top: 35%; left: 50%;
+        transform: translate(-50%,-50%);
+        width: 800px; height: 800px;
+        background: radial-gradient(circle, rgba(200,169,110,.09) 0%, transparent 60%);
+        pointer-events: none; z-index: 1;
+    }
+
+    /* Floating 3D wireframe shapes */
+    .hero-shapes { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .hshape {
+        position: absolute;
+        border: 1px solid rgba(200,169,110,0.08);
+    }
+    .hshape-1 {
+        width: 320px; height: 320px;
+        top: 8%; left: -4%;
+        animation: shapeFloat1 28s ease-in-out infinite;
+    }
+    .hshape-2 {
+        width: 220px; height: 220px;
+        top: 15%; right: -3%;
+        animation: shapeFloat2 22s ease-in-out infinite;
+    }
+    .hshape-3 {
+        width: 140px; height: 140px;
+        bottom: 18%; left: 8%;
+        animation: shapeFloat3 18s ease-in-out infinite;
+    }
+    .hshape-4 {
+        width: 80px; height: 80px;
+        top: 55%; right: 12%;
+        border-radius: 50%;
+        animation: shapeFloat1 15s ease-in-out infinite reverse;
+    }
+    @keyframes shapeFloat1 {
+        0%,100% { transform: perspective(700px) rotateX(40deg) rotateY(0deg) translateY(0px); }
+        33%     { transform: perspective(700px) rotateX(40deg) rotateY(120deg) translateY(-18px); }
+        66%     { transform: perspective(700px) rotateX(40deg) rotateY(240deg) translateY(9px); }
+    }
+    @keyframes shapeFloat2 {
+        0%,100% { transform: perspective(700px) rotateX(-30deg) rotateY(0deg) translateY(0px); }
+        50%     { transform: perspective(700px) rotateX(-30deg) rotateY(180deg) translateY(-22px); }
+    }
+    @keyframes shapeFloat3 {
+        0%,100% { transform: perspective(700px) rotateX(55deg) rotateY(30deg) translateY(0px); }
+        50%     { transform: perspective(700px) rotateX(55deg) rotateY(210deg) translateY(-12px); }
+    }
+
+    /* Perspective grid floor */
+    .hero-grid-wrap {
+        position: absolute;
+        bottom: 56px; left: -15%; right: -15%;
+        height: 44%;
+        pointer-events: none; z-index: 1; overflow: hidden;
+    }
+    .hero-grid-floor {
+        position: absolute; inset: 0;
+        background:
+            linear-gradient(rgba(200,169,110,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(200,169,110,0.1) 1px, transparent 1px);
+        background-size: 72px 72px;
+        transform: perspective(500px) rotateX(72deg);
+        transform-origin: center bottom;
+        animation: gridScroll 2.5s linear infinite;
+        -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 100%, rgba(0,0,0,.85) 0%, transparent 72%);
+        mask-image: radial-gradient(ellipse 90% 90% at 50% 100%, rgba(0,0,0,.85) 0%, transparent 72%);
+    }
+    @keyframes gridScroll {
+        from { background-position: 0 0; }
+        to   { background-position: 0 72px; }
+    }
+
+    /* Hero content */
+    .hero-content {
+        position: relative; z-index: 2;
+        max-width: 880px;
+        display: flex; flex-direction: column; align-items: center;
+    }
+
+    .hero-logo-wrap {
+        margin-bottom: 44px;
+        opacity: 0; animation: fadeUp 1s ease forwards .1s;
+    }
+    .hero-logo-img {
+        width: clamp(200px, 24vw, 300px);
+        height: auto; display: block; margin: 0 auto;
+        filter: brightness(0) invert(1);
+        opacity: .95;
+        /* subtle gold glow behind the mark */
+        drop-shadow: 0 0 40px rgba(200,169,110,0.35);
+        filter: brightness(0) invert(1) drop-shadow(0 0 24px rgba(200,169,110,0.25));
+    }
+    /* fallback text styles (used if img missing) */
+    .hero-logo-mark {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 52px; font-weight: 600;
+        color: var(--gold); letter-spacing: 18px; line-height: 1;
+        display: block;
+        text-shadow: 0 0 40px rgba(200,169,110,0.4), 0 0 80px rgba(200,169,110,0.15);
+    }
+    .hero-logo-rule {
+        width: 48px; height: 1px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        margin: 14px auto 12px;
+    }
+    .hero-logo-sub {
+        font-size: 8.5px; font-weight: 500;
+        letter-spacing: 5px; text-transform: uppercase;
+        color: var(--text); opacity: .35;
+    }
+
+    .hero-eyebrow {
+        font-size: 10px; font-weight: 500;
+        letter-spacing: 4.5px; text-transform: uppercase;
+        color: var(--gold); margin-bottom: 28px;
+        opacity: 0; animation: fadeUp 1s ease forwards .25s;
+    }
+
+    .hero-headline {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(54px, 8vw, 100px);
+        font-weight: 300; line-height: .98;
+        letter-spacing: -.03em; color: var(--text);
+        margin-bottom: 36px;
+        opacity: 0; animation: fadeUp 1s ease forwards .4s;
+        text-shadow:
+            2px 3px 0 rgba(0,0,0,0.5),
+            0 0 60px rgba(200,169,110,0.06);
+    }
+    .hero-headline em { font-style: italic; color: var(--gold); }
+
+    .hero-sub {
+        font-size: 16.5px; font-weight: 300; line-height: 1.85;
+        color: var(--text); opacity: 0;
+        max-width: 620px; margin: 0 auto 56px;
+        animation: fadeUp 1s ease forwards .58s;
+        color: rgba(240,235,226,0.75);
+    }
+
+    .hero-ctas {
+        display: flex; gap: 16px; flex-wrap: wrap;
+        justify-content: center;
+        opacity: 0; animation: fadeUp 1s ease forwards .74s;
+    }
+
+    /* Ticker */
+    .stat-ticker {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        border-top: 1px solid var(--border);
+        overflow: hidden; z-index: 3;
+        background: rgba(8,8,8,.6);
+        backdrop-filter: blur(10px);
+    }
+    .ticker-track { display: flex; width: max-content; animation: ticker 30s linear infinite; }
+    .ticker-item {
+        display: flex; align-items: center; gap: 32px;
+        padding: 14px 48px;
+        font-size: 10px; font-weight: 400;
+        letter-spacing: 3px; text-transform: uppercase;
+        color: var(--text); opacity: .5; white-space: nowrap;
+    }
+    .ticker-sep { color: var(--gold); font-size: 12px; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ──────────────────────────────────────────
+       BUTTONS
+    ────────────────────────────────────────── */
+    .btn-gold {
+        display: inline-block; font-size: 10.5px; font-weight: 500;
+        letter-spacing: 2.5px; text-transform: uppercase;
+        color: var(--bg); background: var(--gold);
+        text-decoration: none; padding: 17px 38px;
+        transition: background .3s, transform .25s, box-shadow .3s;
+        position: relative; overflow: hidden;
+    }
+    .btn-gold::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+        opacity: 0; transition: opacity .3s;
+    }
+    .btn-gold:hover {
+        background: var(--gold-lt);
+        transform: translateY(-3px);
+        box-shadow: 0 16px 40px rgba(200,169,110,0.35);
+    }
+    .btn-gold:hover::after { opacity: 1; }
+
+    .btn-outline {
+        display: inline-block; font-size: 10.5px; font-weight: 400;
+        letter-spacing: 2.5px; text-transform: uppercase;
+        color: var(--text); text-decoration: none; padding: 17px 38px;
+        border: 1px solid rgba(240,235,226,.2);
+        transition: border-color .3s, color .3s, transform .25s, box-shadow .3s;
+    }
+    .btn-outline:hover {
+        border-color: var(--gold); color: var(--gold);
+        transform: translateY(-3px);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .btn-dark {
+        display: inline-block; font-size: 10.5px; font-weight: 500;
+        letter-spacing: 2.5px; text-transform: uppercase;
+        color: var(--text); background: rgba(8,8,8,.9);
+        text-decoration: none; padding: 20px 48px;
+        border: 1px solid rgba(8,8,8,1);
+        transition: background .3s, transform .25s, box-shadow .3s;
+    }
+    .btn-dark:hover {
+        background: #0f0f0f;
+        transform: translateY(-3px);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+
+    /* ──────────────────────────────────────────
+       SCROLL ANIMATIONS
+    ────────────────────────────────────────── */
+    .fade-up {
+        opacity: 0; transform: translateY(44px);
+        transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+    }
+    .fade-up.in { opacity: 1; transform: translateY(0); }
+
+    .stagger > * {
+        opacity: 0; transform: translateY(32px);
+        transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+    }
+    .stagger > *.in { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ──────────────────────────────────────────
+       SECTION BASE
+    ────────────────────────────────────────── */
+    section { padding: 128px 64px; }
+
+    .s-label {
+        font-size: 9.5px; font-weight: 500;
+        letter-spacing: 4.5px; text-transform: uppercase;
+        color: var(--gold); margin-bottom: 18px;
+    }
+
+    .s-headline {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(36px, 4vw, 58px);
+        font-weight: 300; line-height: 1.08;
+        letter-spacing: -.015em; margin-bottom: 64px;
+    }
+
+    /* ──────────────────────────────────────────
+       SERVICES
+    ────────────────────────────────────────── */
+    #services { background: var(--bg2); }
+
+    .section-center {
+        text-align: center; max-width: 680px;
+        margin: 0 auto 72px;
+    }
+    .section-center .s-headline { margin-bottom: 0; }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--border);
+    }
+
+    .svc-card {
+        background: var(--card-bg);
+        padding: 52px 44px;
+        position: relative; overflow: hidden;
+        transition: box-shadow .4s ease;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        transform-style: preserve-3d;
+        cursor: none;
+    }
+    /* Glare overlay injected by JS */
+    .svc-card .glare {
+        position: absolute; inset: 0; pointer-events: none;
+        transition: opacity .4s; opacity: 0;
+        border-radius: 0;
+    }
+    /* Gold bottom accent */
+    .svc-card::before {
+        content: ''; position: absolute;
+        bottom: 0; left: 0; width: 0; height: 2px;
+        background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+        transition: width .45s cubic-bezier(.16,1,.3,1);
+    }
+    .svc-card:hover::before { width: 100%; }
+
+    .svc-num {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 10.5px; letter-spacing: 3px;
+        color: var(--gold); opacity: .35; margin-bottom: 24px;
+    }
+    .svc-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 27px; font-weight: 500;
+        line-height: 1.2; margin-bottom: 16px; color: var(--text);
+    }
+    .svc-desc { font-size: 14px; line-height: 1.85; color: var(--muted); }
+
+    /* ──────────────────────────────────────────
+       RESULTS
+    ────────────────────────────────────────── */
+    #results { background: var(--bg); }
+
+    .stats-grid {
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        gap: 1px; background: var(--border);
+        margin-bottom: 1px;
+    }
+    .stat-cell {
+        background: var(--bg2); padding: 72px 40px;
+        text-align: center; position: relative; overflow: hidden;
+        transition: box-shadow .4s;
+        transform-style: preserve-3d;
+        cursor: none;
+        backdrop-filter: blur(8px);
+    }
+    /* Glow behind number */
+    .stat-cell::before {
+        content: ''; position: absolute;
+        top: 50%; left: 50%; transform: translate(-50%,-50%);
+        width: 160px; height: 160px;
+        background: radial-gradient(circle, rgba(200,169,110,.07) 0%, transparent 70%);
+        pointer-events: none; transition: opacity .4s;
+    }
+    .stat-num {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(52px, 5.5vw, 80px);
+        font-weight: 300; color: var(--gold);
+        line-height: 1; margin-bottom: 16px;
+        text-shadow: 0 0 40px rgba(200,169,110,.2);
+    }
+    .stat-lbl {
+        font-size: 9.5px; font-weight: 500;
+        letter-spacing: 3px; text-transform: uppercase;
+        color: var(--text); opacity: .4;
+    }
+
+    .testimonials-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 1px; background: var(--border); margin-top: 1px;
+    }
+    .testi-card {
+        background: rgba(14,14,14,0.7); padding: 52px 44px;
+        border: 1px solid var(--border);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        transition: border-color .3s, box-shadow .4s;
+        transform-style: preserve-3d;
+        cursor: none; position: relative; overflow: hidden;
+    }
+    .testi-card:hover { border-color: rgba(200,169,110,.3); }
+
+    .testi-stars { color: var(--gold); font-size: 12px; letter-spacing: 4px; margin-bottom: 28px; }
+    .testi-quote {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 19px; font-weight: 400; font-style: italic;
+        line-height: 1.75; color: var(--text); margin-bottom: 36px;
+    }
+    .testi-name { font-size: 12.5px; font-weight: 500; letter-spacing: .5px; color: var(--text); margin-bottom: 4px; }
+    .testi-co { font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); opacity: .8; }
+
+    /* ──────────────────────────────────────────
+       PROCESS
+    ────────────────────────────────────────── */
+    #process { background: var(--bg2); }
+
+    .process-grid {
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid var(--border);
+    }
+    .proc-step {
+        padding: 56px 36px;
+        border-right: 1px solid var(--border);
+        text-align: center;
+    }
+    .proc-step:last-child { border-right: none; }
+
+    .proc-num {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 90px; font-weight: 300;
+        color: var(--gold); opacity: .1;
+        line-height: 1; margin-bottom: 20px; display: block;
+    }
+    .proc-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 27px; font-weight: 500;
+        color: var(--text); margin-bottom: 14px;
+    }
+    .proc-desc { font-size: 14px; line-height: 1.85; color: var(--muted); }
+
+    /* ──────────────────────────────────────────
+       ABOUT
+    ────────────────────────────────────────── */
+    #about { background: var(--bg); }
+
+    .about-intro {
+        font-size: 17px; line-height: 1.95;
+        color: rgba(240,235,226,.7);
+        max-width: 740px; margin: 0 auto 20px;
+    }
+    .about-intro + .about-intro { margin-top: 0; }
+
+    .about-pillars {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 1px; background: var(--border);
+        margin-top: 80px;
+    }
+    .pillar-card {
+        background: var(--card-bg); padding: 56px 48px;
+        text-align: center;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        position: relative; overflow: hidden;
+        transform-style: preserve-3d; cursor: none;
+        transition: box-shadow .4s;
+    }
+    .pillar-icon {
+        color: var(--gold); font-size: 22px;
+        display: block; margin-bottom: 22px;
+    }
+    .pillar-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 26px; font-weight: 500;
+        color: var(--text); margin-bottom: 16px;
+    }
+    .pillar-desc { font-size: 14px; line-height: 1.85; color: var(--muted); }
+    .diff-icon { color: var(--gold); font-size: 18px; flex-shrink: 0; margin-top: 3px; }
+
+    /* ──────────────────────────────────────────
+       CTA
+    ────────────────────────────────────────── */
+    #cta {
+        background: linear-gradient(135deg, #c09050 0%, #d4b870 45%, #b07e30 100%);
+        padding: 140px 64px; text-align: center;
+        position: relative; overflow: hidden;
+    }
+    /* Subtle 3D grid on CTA bg */
+    #cta::before {
+        content: ''; position: absolute; inset: 0;
+        background:
+            linear-gradient(rgba(0,0,0,.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,0,0,.08) 1px, transparent 1px);
+        background-size: 60px 60px;
+        pointer-events: none;
+    }
+    #cta .s-label { color: rgba(8,8,8,.4); position: relative; }
+    #cta .s-headline { color: var(--bg); margin-bottom: 24px; position: relative; }
+
+    .cta-sub {
+        font-size: 16px; line-height: 1.85;
+        color: rgba(8,8,8,.6);
+        max-width: 540px; margin: 0 auto 52px;
+        position: relative;
+    }
+    .trust-row {
+        display: flex; justify-content: center;
+        gap: 36px; flex-wrap: wrap; margin-top: 32px;
+        position: relative;
+    }
+    .trust-item { font-size: 10.5px; font-weight: 500; letter-spacing: 1px; color: rgba(8,8,8,.5); }
+
+    /* ──────────────────────────────────────────
+       FOOTER
+    ────────────────────────────────────────── */
+    footer {
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        padding: 96px 64px 48px;
+    }
+    .footer-grid {
+        display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 64px; margin-bottom: 72px;
+    }
+    .footer-tagline {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 15px; font-style: italic;
+        color: var(--text); opacity: .35;
+        margin-top: 18px; line-height: 1.75;
+    }
+    .footer-col h4 {
+        font-size: 9.5px; font-weight: 500;
+        letter-spacing: 3.5px; text-transform: uppercase;
+        color: var(--gold); margin-bottom: 24px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+    .footer-col ul a { font-size: 14px; color: var(--text); text-decoration: none; opacity: .5; transition: opacity .3s, color .3s; }
+    .footer-col ul a:hover { opacity: 1; color: var(--gold); }
+    .footer-contact { display: flex; flex-direction: column; gap: 10px; }
+    .footer-contact a { font-size: 14px; color: var(--text); text-decoration: none; opacity: .5; transition: opacity .3s, color .3s; }
+    .footer-contact a:hover { opacity: 1; color: var(--gold); }
+
+    .socials { display: flex; gap: 10px; margin-top: 28px; }
+    .social-a {
+        display: flex; align-items: center; justify-content: center;
+        width: 34px; height: 34px;
+        border: 1px solid var(--border); color: var(--text);
+        text-decoration: none; opacity: .5;
+        transition: opacity .3s, border-color .3s, color .3s, transform .25s;
+    }
+    .social-a:hover { opacity: 1; border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .social-a svg { width: 14px; height: 14px; fill: currentColor; }
+
+    .footer-bar {
+        border-top: 1px solid var(--border); padding-top: 32px;
+        display: flex; justify-content: space-between;
+        align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-bar p { font-size: 11px; color: var(--text); opacity: .3; letter-spacing: 1px; }
+    .footer-bar a { font-size: 11px; color: var(--gold); text-decoration: none; letter-spacing: 2px; text-transform: uppercase; opacity: .7; transition: opacity .3s; }
+    .footer-bar a:hover { opacity: 1; }
+
+    /* ──────────────────────────────────────────
+       RESPONSIVE
+    ────────────────────────────────────────── */
+    @media (max-width: 1100px) {
+        nav, section, #hero, #cta, footer { padding-left: 40px; padding-right: 40px; }
+        nav.scrolled { padding-left: 40px; padding-right: 40px; }
+        .services-grid { grid-template-columns: repeat(2, 1fr); }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .process-grid { grid-template-columns: repeat(2, 1fr); }
+        .proc-step { border-right: none; border-bottom: 1px solid var(--border); padding: 44px 28px; }
+        .proc-step:last-child { border-bottom: none; }
+        .about-pillars { grid-template-columns: 1fr; }
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
+    }
+
+    @media (max-width: 768px) {
+        nav, section, #hero, #cta, footer { padding-left: 24px; padding-right: 24px; }
+        nav.scrolled { padding-left: 24px; padding-right: 24px; }
+        .nav-links, .nav-cta { display: none; }
+        .nav-hamburger { display: flex; }
+        .hero-ctas { flex-direction: column; align-items: center; }
+        .services-grid { grid-template-columns: 1fr; }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .testimonials-grid { grid-template-columns: 1fr; }
+        .about-pillars { grid-template-columns: 1fr; }
+        .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+        .footer-bar { flex-direction: column; align-items: flex-start; }
+        .hshape { display: none; }
+        body { cursor: auto; }
+        #cursor { display: none; }
+    }
+    </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close">&#215;</button>
+    <a href="#services" class="mobile-link">Services</a>
+    <a href="#results" class="mobile-link">Results</a>
+    <a href="#process" class="mobile-link">Process</a>
+    <a href="#about" class="mobile-link">About</a>
+    <a href="https://novamediamarketing.org/bookingpage" class="mobile-link" style="color:var(--gold);">Book a Call</a>
+</div>
+
+<!-- Nav -->
+<nav id="nav">
+    <a href="#hero" class="nav-logo">
+        <img src="logo.png" alt="Nova Media Marketing" class="nav-logo-img">
+        <span class="logo-name">Nova Media Marketing</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#cta">Contact</a></li>
+    </ul>
+    <a href="https://novamediamarketing.org/bookingpage" class="nav-cta">Book a Strategy Call</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+    <!-- Layers -->
+    <div class="hero-glow"></div>
+    <div class="hero-shapes">
+        <div class="hshape hshape-1"></div>
+        <div class="hshape hshape-2"></div>
+        <div class="hshape hshape-3"></div>
+        <div class="hshape hshape-4"></div>
+    </div>
+    <div class="hero-grid-wrap">
+        <div class="hero-grid-floor"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="hero-content">
+        <p class="hero-eyebrow">Exclusively for Real Estate Agents · Meta Ads · AI Lead Qualification</p>
+
+        <h1 class="hero-headline">
+            More Closings.<br><em>Less Chasing.</em>
+        </h1>
+
+        <p class="hero-sub">
+            Nova Media Marketing is a lead generation agency built exclusively for real estate agents. We run Meta Ad campaigns, qualify every lead with AI, and book appointments directly onto your calendar — so you can focus on what you do best: closing.
+        </p>
+
+        <div class="hero-ctas">
+            <a href="https://novamediamarketing.org/bookingpage" class="btn-gold">Book Your Free Strategy Call</a>
+            <a href="#services" class="btn-outline">See How It Works ↓</a>
+        </div>
+    </div>
+
+    <!-- Stat Ticker -->
+    <div class="stat-ticker">
+        <div class="ticker-track">
+            <div class="ticker-item">Built for Real Estate Agents <span class="ticker-sep">✦</span> 5 Agents Partnered <span class="ticker-sep">✦</span> 100+ Appointments Booked <span class="ticker-sep">✦</span> Meta Ads + AI Qualification <span class="ticker-sep">✦</span> 4.9★ Client Rating <span class="ticker-sep">✦</span></div>
+            <div class="ticker-item">Built for Real Estate Agents <span class="ticker-sep">✦</span> 5 Agents Partnered <span class="ticker-sep">✦</span> 100+ Appointments Booked <span class="ticker-sep">✦</span> Meta Ads + AI Qualification <span class="ticker-sep">✦</span> 4.9★ Client Rating <span class="ticker-sep">✦</span></div>
+            <div class="ticker-item">Built for Real Estate Agents <span class="ticker-sep">✦</span> 5 Agents Partnered <span class="ticker-sep">✦</span> 100+ Appointments Booked <span class="ticker-sep">✦</span> Meta Ads + AI Qualification <span class="ticker-sep">✦</span> 4.9★ Client Rating <span class="ticker-sep">✦</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+    <div class="section-center fade-up">
+        <p class="s-label">What We Do</p>
+        <h2 class="s-headline">Everything a Real Estate Agent Needs<br>to Generate & Close More Deals.</h2>
+        <p style="font-size:16px;line-height:1.85;color:var(--muted);max-width:620px;margin:0 auto;">We handle the full acquisition pipeline — from the first ad impression to a confirmed appointment on your calendar. All of it built specifically for real estate agents.</p>
+    </div>
+    <div class="services-grid stagger">
+        <div class="svc-card">
+            <p class="svc-num">01</p>
+            <h3 class="svc-title">Meta Ads Management</h3>
+            <p class="svc-desc">We build and manage high-converting Facebook and Instagram ad campaigns targeted at motivated buyers and sellers in your local market. Every campaign is engineered to generate real leads — not just likes and impressions. We test creatives, refine targeting, and optimize daily to lower your cost per lead over time.</p>
+        </div>
+        <div class="svc-card">
+            <p class="svc-num">02</p>
+            <h3 class="svc-title">AI Lead Qualification</h3>
+            <p class="svc-desc">The moment a lead comes in, our AI engages them instantly — 24 hours a day, 7 days a week. It asks the right questions, identifies their timeline and motivation, scores their intent, and filters out anyone who isn't serious. You only hear from leads who are genuinely ready to work with an agent.</p>
+        </div>
+        <div class="svc-card">
+            <p class="svc-num">03</p>
+            <h3 class="svc-title">Automated Appointment Booking</h3>
+            <p class="svc-desc">Once a lead is qualified, our system books them directly onto your calendar — no back-and-forth, no manual scheduling. You receive a confirmed appointment with a pre-screened prospect who already knows who you are, what you offer, and is ready to have a real conversation.</p>
+        </div>
+        <div class="svc-card">
+            <p class="svc-num">04</p>
+            <h3 class="svc-title">Retargeting &amp; Remarketing</h3>
+            <p class="svc-desc">Most buyers and sellers don't convert on the first touch. We run strategic retargeting campaigns across Facebook and Instagram to keep your name and listings in front of warm audiences — so when they're ready to move, you're the agent they call. We stay in front of them so you don't have to.</p>
+        </div>
+        <div class="svc-card">
+            <p class="svc-num">05</p>
+            <h3 class="svc-title">Lead Nurture Automation</h3>
+            <p class="svc-desc">Not every lead is ready today — but that doesn't mean they're not valuable. We build automated follow-up sequences that keep your pipeline warm with consistent touchpoints via email, SMS, and social retargeting. Your name stays top-of-mind until the moment they're ready to buy, sell, or refer.</p>
+        </div>
+        <div class="svc-card">
+            <p class="svc-num">06</p>
+            <h3 class="svc-title">Performance Reporting</h3>
+            <p class="svc-desc">You'll never wonder where your money is going. We provide clear, real-time dashboards that show every dollar spent, every lead generated, every appointment booked, and what your return on ad spend looks like. Full transparency, every step of the way — no fluff, no vanity metrics.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section id="process">
+    <div class="section-center fade-up">
+        <p class="s-label">How It Works</p>
+        <h2 class="s-headline">From Your First Call to a Full Calendar —<br>Here Is the Exact Process.</h2>
+        <p style="font-size:16px;line-height:1.85;color:var(--muted);max-width:600px;margin:0 auto;">We keep things simple. Four clear steps from onboarding to a pipeline full of qualified real estate appointments.</p>
+    </div>
+
+    <div class="process-grid stagger">
+        <div class="proc-step">
+            <span class="proc-num">01</span>
+            <h3 class="proc-title">Strategy Call</h3>
+            <p class="proc-desc">We start with a free 30-minute strategy call to understand your market, your goals, and your current situation. We'll identify exactly where motivated buyers and sellers are in your area and outline a custom plan to reach them — before we ever spend a dollar on ads.</p>
+        </div>
+        <div class="proc-step">
+            <span class="proc-num">02</span>
+            <h3 class="proc-title">Campaign Launch</h3>
+            <p class="proc-desc">Our team builds your Meta ad campaigns from the ground up — crafting the creative, writing the copy, building the landing pages, and dialing in the audience targeting. Once approved, we launch fast. Most clients are live and generating leads within the first week.</p>
+        </div>
+        <div class="proc-step">
+            <span class="proc-num">03</span>
+            <h3 class="proc-title">AI Qualification</h3>
+            <p class="proc-desc">Every lead that comes in is immediately engaged by our AI system — day or night. It qualifies them based on timeline, motivation, and readiness, then schedules a confirmed appointment directly on your calendar. You wake up to booked meetings, not a list of names to call.</p>
+        </div>
+        <div class="proc-step">
+            <span class="proc-num">04</span>
+            <h3 class="proc-title">Scale &amp; Optimize</h3>
+            <p class="proc-desc">We don't just set it and forget it. Our team monitors your campaign performance daily, testing new angles, refining audiences, and cutting what isn't working. As results improve, we scale your budget strategically to bring your cost-per-appointment down and your volume up.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── RESULTS ── -->
+<section id="results">
+    <div class="section-center fade-up">
+        <p class="s-label">Proven Results</p>
+        <h2 class="s-headline">Real Results for Real Estate Agents.</h2>
+        <p style="font-size:16px;line-height:1.85;color:var(--muted);max-width:580px;margin:0 auto;">We're a young agency with a focused mission. Every number below represents real agents, real appointments, and real revenue generated through our system.</p>
+    </div>
+
+    <div class="stats-grid stagger">
+        <div class="stat-cell">
+            <div class="stat-num" data-target="5">0</div>
+            <p class="stat-lbl">Real Estate Agents Partnered</p>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-num" data-target="100" data-suffix="+">0</div>
+            <p class="stat-lbl">Appointments Booked</p>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-num" data-target="300" data-suffix="%">0</div>
+            <p class="stat-lbl">Average ROAS</p>
+        </div>
+        <div class="stat-cell">
+            <div class="stat-num" data-target="4.9" data-suffix="★" data-decimal="1">0</div>
+            <p class="stat-lbl">Average Client Rating</p>
+        </div>
+    </div>
+
+    <div class="testimonials-grid stagger">
+        <div class="testi-card">
+            <p class="testi-stars">★★★★★</p>
+            <p class="testi-quote">"Nova booked 14 qualified appointments in our first 30 days. Their AI follow-up system is unlike anything I've seen in real estate. I no longer spend my mornings chasing leads — they come to me."</p>
+            <p class="testi-name">James R.</p>
+            <p class="testi-co">Realtor · RE/MAX Elite</p>
+        </div>
+        <div class="testi-card">
+            <p class="testi-stars">★★★★★</p>
+            <p class="testi-quote">"I was spending $2,000 a month on leads that went nowhere. Nova turned my ad budget into a full calendar within 3 weeks. The difference isn't just the ads — it's the AI that qualifies before I ever pick up the phone."</p>
+            <p class="testi-name">Ashley T.</p>
+            <p class="testi-co">Agent · Keller Williams</p>
+        </div>
+        <div class="testi-card">
+            <p class="testi-stars">★★★★★</p>
+            <p class="testi-quote">"The AI qualification alone saves me 10+ hours every single week. Every appointment I take is pre-screened, motivated, and ready to move. This is what modern real estate marketing looks like."</p>
+            <p class="testi-name">David M.</p>
+            <p class="testi-co">Broker · Coldwell Banker</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+    <div class="section-center fade-up">
+        <p class="s-label">Who We Are</p>
+        <h2 class="s-headline">A Lead Generation Agency Built<br>Exclusively for Real Estate Agents.</h2>
+        <p class="about-intro">Nova Media Marketing was founded on a single belief — that real estate agents deserve a marketing partner who actually understands their business. Not a generalist agency juggling restaurants, clothing brands, and e-commerce stores alongside your account. A team that speaks your language, knows your sales cycle, and is obsessed with one outcome: putting qualified buyers and sellers on your calendar.</p>
+        <p class="about-intro">We combine proven Meta advertising strategies with AI-powered lead qualification to build a system that works around the clock. While you're out in the field showing homes and closing deals, we're running your ads, engaging your leads, and filling your calendar — automatically. No chasing. No cold calling. No wasted hours on unqualified contacts.</p>
+    </div>
+    <div class="about-pillars stagger">
+        <div class="pillar-card">
+            <span class="pillar-icon">✦</span>
+            <h3 class="pillar-title">Real Estate Specialists</h3>
+            <p class="pillar-desc">We work exclusively with real estate agents and brokers. Every strategy, every ad, every automation we build is designed specifically for the real estate sales cycle — not adapted from some other industry playbook.</p>
+        </div>
+        <div class="pillar-card">
+            <span class="pillar-icon">✦</span>
+            <h3 class="pillar-title">AI That Works While You Sleep</h3>
+            <p class="pillar-desc">Our AI system responds to every lead within seconds — 24 hours a day, 7 days a week. It qualifies them, handles objections, and books them onto your calendar automatically. You wake up to confirmed appointments, not missed opportunities.</p>
+        </div>
+        <div class="pillar-card">
+            <span class="pillar-icon">✦</span>
+            <h3 class="pillar-title">No Lock-In Contracts</h3>
+            <p class="pillar-desc">We don't believe in trapping clients with long-term agreements. We operate month-to-month because we're confident in the results we deliver. If we're not performing, you shouldn't be paying — it's that simple.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="cta">
+    <div class="fade-up">
+        <p class="s-label">Get Started</p>
+        <h2 class="s-headline">Ready to Fill Your Calendar With<br>Qualified Appointments?</h2>
+        <p class="cta-sub">Book a free 30-minute strategy call. We'll show you exactly how we'd run ads in your market, what results to expect, and what it costs — no pressure, no pitch.</p>
+        <a href="https://novamediamarketing.org/bookingpage" class="btn-dark">Book Your Free Call Now →</a>
+        <div class="trust-row">
+            <span class="trust-item">&#10003; Free &amp; No Obligation</span>
+            <span class="trust-item">&#10003; 30-Minute Call</span>
+            <span class="trust-item">&#10003; Custom Strategy Included</span>
+        </div>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <a href="#hero" class="nav-logo">
+                <img src="logo.png" alt="Nova Media Marketing" class="nav-logo-img">
+            </a>
+            <p class="footer-tagline">"We Don't Follow Trends.<br>We Create Them."</p>
+            <div class="socials">
+                <a href="#" class="social-a" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="#" class="social-a" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="#" class="social-a" aria-label="TikTok">
+                    <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                </a>
+                <a href="#" class="social-a" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="#services">Meta Ads Management</a></li>
+                <li><a href="#services">AI Lead Qualification</a></li>
+                <li><a href="#services">Appointment Booking</a></li>
+                <li><a href="#services">Retargeting &amp; Remarketing</a></li>
+                <li><a href="#services">Lead Nurture Automation</a></li>
+                <li><a href="#services">Performance Reporting</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="https://novamediamarketing.org/bookingpage">Book a Call</a></li>
+                <li><a href="#">Careers</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <div class="footer-contact">
+                <a href="mailto:hello@novamediamarketing.org">hello@novamediamarketing.org</a>
+                <a href="https://novamediamarketing.org">novamediamarketing.org</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bar">
+        <p>&copy; 2026 Nova Media Marketing. All rights reserved.</p>
+        <a href="https://novamediamarketing.org/bookingpage">Book a Call &rarr;</a>
+    </div>
+</footer>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ── CURSOR ── */
+    const cursor = document.getElementById('cursor');
+    let mx = 0, my = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function loop() {
+        cx += (mx - cx) * 0.12;
+        cy += (my - cy) * 0.12;
+        cursor.style.left = cx + 'px';
+        cursor.style.top  = cy + 'px';
+        requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+    });
+
+    /* ── STICKY NAV ── */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    /* ── MOBILE MENU ── */
+    const menu   = document.getElementById('mobileMenu');
+    const burger = document.getElementById('hamburger');
+    const closeBtn = document.getElementById('mobileClose');
+    burger.addEventListener('click', () => menu.classList.add('open'));
+    closeBtn.addEventListener('click', () => menu.classList.remove('open'));
+    menu.querySelectorAll('.mobile-link').forEach(a => {
+        a.addEventListener('click', () => menu.classList.remove('open'));
+    });
+
+    /* ── SMOOTH SCROLL ── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+        });
+    });
+
+    /* ── 3D CARD TILT ── */
+    function initTilt(selector, intensity) {
+        document.querySelectorAll(selector).forEach(card => {
+            // Inject glare layer
+            const glare = document.createElement('div');
+            glare.className = 'glare';
+            card.appendChild(glare);
+
+            card.addEventListener('mousemove', e => {
+                const r   = card.getBoundingClientRect();
+                const x   = (e.clientX - r.left) / r.width  - 0.5;
+                const y   = (e.clientY - r.top)  / r.height - 0.5;
+                const rX  = -y * intensity;
+                const rY  =  x * intensity;
+
+                card.style.transition = 'transform .08s ease, box-shadow .3s ease';
+                card.style.transform  = `perspective(1100px) rotateX(${rX}deg) rotateY(${rY}deg) translateZ(14px)`;
+                card.style.boxShadow  = `${-x * 28}px ${-y * 28}px 50px rgba(200,169,110,0.07), 0 24px 60px rgba(0,0,0,.35)`;
+
+                glare.style.opacity = '.85';
+                glare.style.background = `radial-gradient(circle at ${(x + 0.5) * 100}% ${(y + 0.5) * 100}%, rgba(200,169,110,0.12) 0%, transparent 55%)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1), box-shadow .6s ease';
+                card.style.transform  = 'perspective(1100px) rotateX(0) rotateY(0) translateZ(0)';
+                card.style.boxShadow  = 'none';
+                glare.style.opacity   = '0';
+            });
+        });
+    }
+
+    initTilt('.svc-card',    9);
+    initTilt('.testi-card',  5);
+    initTilt('.stat-cell',   4);
+    initTilt('.pillar-card', 6);
+
+    /* ── SCROLL ANIMATIONS ── */
+    const ioFade = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('in'); ioFade.unobserve(e.target); }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => ioFade.observe(el));
+
+    const ioStagger = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                Array.from(e.target.children).forEach((child, i) => {
+                    setTimeout(() => child.classList.add('in'), i * 100);
+                });
+                ioStagger.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.stagger').forEach(el => ioStagger.observe(el));
+
+    /* ── COUNT-UP ── */
+    function countUp(el) {
+        const target  = parseFloat(el.dataset.target);
+        const prefix  = el.dataset.prefix || '';
+        const suffix  = el.dataset.suffix || '';
+        const dec     = parseInt(el.dataset.decimal || '0', 10);
+        const dur = 2200, t0 = performance.now();
+        function tick(now) {
+            const p = Math.min((now - t0) / dur, 1);
+            const v = (1 - Math.pow(1 - p, 3)) * target;
+            el.textContent = prefix + v.toFixed(dec) + suffix;
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = prefix + target.toFixed(dec) + suffix;
+        }
+        requestAnimationFrame(tick);
+    }
+    const ioCount = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { countUp(e.target); ioCount.unobserve(e.target); }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-num[data-target]').forEach(el => ioCount.observe(el));
+
+    /* ── HERO PARALLAX (subtle) ── */
+    const heroContent = document.querySelector('.hero-content');
+    const heroGlow    = document.querySelector('.hero-glow');
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y < window.innerHeight && heroContent) {
+            heroContent.style.transform = `translateY(${y * 0.18}px)`;
+        }
+        if (heroGlow) heroGlow.style.transform = `translate(-50%, calc(-50% + ${y * 0.08}px))`;
+    }, { passive: true });
+
+})();
+</script>
+</body>
+</html>
