@@ -22,6 +22,27 @@
     ────────────────────────────────────────── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+    /* ── GHL FULL-BLEED FIX ── */
+    html, body {
+        background: #080808 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    .nmm-root {
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #080808;
+        overflow-x: hidden;
+        cursor: none;
+    }
+    /* Kill any GHL wrapper backgrounds */
+    .nmm-root * { max-width: none; }
+
     :root {
         --bg:         #080808;
         --bg2:        #0e0e0e;
@@ -176,6 +197,7 @@
         position: relative; overflow: hidden;
         padding: 160px 64px 120px;
         text-align: center;
+        background: #080808 !important;
     }
 
     /* Noise grain */
@@ -748,6 +770,7 @@
     </style>
 </head>
 <body>
+<div class="nmm-root">
 
 <div id="cursor"></div>
 
@@ -1181,5 +1204,6 @@
 
 })();
 </script>
+</div><!-- /nmm-root -->
 </body>
 </html>
